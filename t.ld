@@ -2,7 +2,7 @@ ENTRY(reset_handler)
 SECTIONS
 {
 	. = 0x10000;
-	.text : { ts.o *(.text) }
+	.text : { *(.text) }
 	.data : { *(.data) }
 	.bss : { *(.bss) }
 	. = ALIGN(8);
