@@ -86,6 +86,6 @@ int main()
       color = CYAN;
       kputs("Digite uma linha: ");
       kputs(kgets(texto));
-      kgetc(); kputs("\n");
+      kputs("\n");
    }
 }
