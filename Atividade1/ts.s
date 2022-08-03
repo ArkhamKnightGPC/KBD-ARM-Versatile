@@ -4,6 +4,7 @@
 
 .global reset_handler
 .global vectors_start, vectors_end
+.global lock, unlock
 
 reset_handler:
   LDR sp, =svc_stack     // set SVC stack
@@ -20,6 +21,18 @@ irq_handler:             // IRQ interrupt handler
   stmfd	sp!, {r0-r12, lr}
   bl	IRQ_chandler  
   ldmfd	sp!, {r0-r12, pc}^
+
+lock:
+  mrs r4, cpsr
+  orr r4, r4, #0x80
+  msr cpsr, r4
+  mov pc, lr
+
+unlock:
+  MRS r4, cpsr
+  BIC r4, r4, #0x80
+  MSR cpsr, r4
+  mov pc, lr
 
 vectors_start:
   LDR PC, reset_handler_addr

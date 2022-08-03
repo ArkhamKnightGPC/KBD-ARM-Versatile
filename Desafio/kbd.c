@@ -4,7 +4,6 @@
 #define KSTAT 0x04
 #define KDATA 0x08
 #define KCLK  0x0C
-#define KISTA 0x10
 
 typedef volatile struct kbd{
   char *base;
@@ -14,7 +13,7 @@ typedef volatile struct kbd{
 
 volatile KBD kbd;
 
-int release;       // key release flag
+int release;
 
 int kbd_init()
 {
@@ -24,7 +23,6 @@ int kbd_init()
   *(kp->base + KCLK)  = 8;       // ARM manual says clock=8
   kp->head = kp->tail = 0;       // circular buffer char buf[128]
   kp->data = 0; kp->room = 128;
-
   release = 0;
 }
 
@@ -37,22 +35,18 @@ void kbd_handler()
 
   scode = *(kp->base + KDATA);   // get scan code of this interrpt
 
-  kputs("kbd interrupt scancode = "); kprintx(scode);
-
-  if (scode == 0xF0){  // it's key release 
-     release = 1;      // set release flag
-     return;
+  if (scode == 0xF0){  // ignora liberacao de tecla
+    release = 1;
+    return;
   }
 
-  if (release == 1){   // scan code after 0xF0
-     release = 0;      // reset release flag
-     return;
+  if(release == 1){
+    release = 0;
+    return;
   }
 
   // map scode to ASCII in lowercase 
   c = ltab[scode];
-
-  kputs("kbd interrupt : "); kputc(c); kputs("\n");
 
   kp->buf[kp->head++] = c;
   kp->head %= 128;
@@ -68,17 +62,19 @@ int kgetc()
   while(kp->data == 0);              // BUSY wait while kp->data is 0 
 
   lock();                            // mask out IRQ
-    c = kp->buf[kp->tail++]; 
-    kp->tail %= 128;                 /*** Critical Region ***/
-    kp->data--; kp->room++;
-    unlock();                        // unmask IRQ
+  c = kp->buf[kp->tail++]; 
+  kp->tail %= 128;                 /*** Critical Region ***/
+  kp->data--; kp->room++;
+  unlock();                        // unmask IRQ
   return c;
 }
+
 
 int kgets(char s[ ])
 {
   char c;
   while( (c = kgetc()) != '\r'){
+    kputc(c);
     *s = c;
     s++;
   }
