@@ -1,5 +1,9 @@
-arm-none-eabi-gcc -c -mcpu=arm926ej-s -g super.c -o super.o
-arm-none-eabi-as -c -mcpu=arm926ej-s -g ts.s -o ts.o
-arm-none-eabi-ld -T t.ld ts.o super.o -o t.elf
+LIB=/usr/lib/gcc/arm-none-eabi/9.2.1
+
+arm-none-eabi-as -mcpu=arm926ej-s ts.s -o ts.o
+arm-none-eabi-gcc -c -mcpu=arm926ej-s t.c -o t.o
+arm-none-eabi-ld -T t.ld ts.o t.o -o t.elf -L $LIB -lgcc
 arm-none-eabi-objcopy -O binary t.elf t.bin
-qemu-system-arm -M versatilepb -m 128M -kernel t.bin -nographic -serial /dev/null
+rm *.o *.elf
+qemu-system-arm -M versatilepb -m 128M -kernel t.bin -serial mon:stdio
+
