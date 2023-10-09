@@ -1,9 +1,9 @@
 # KBD-ARM-Versatile
-Expêriencia que envolve a recepção de dados do teclado utilizando a toolchain ***gcc-arm-none-eabi*** e o sistema ***qemu-system-arm***.
+Experiment involving keyboard data reception using the ***gcc-arm-none-eabi*** toolchain and the ***qemu-system-arm*** system.
 
-Projeto da disciplina PCS 3732 Laboratório de Microprocessadores 2022 ([pcs.usp.br/~jkinoshi](https://www2.pcs.usp.br/~jkinoshi/2022/labmicro-22.html)), baseado no livro ***Embedded and Real Time Systems, K.C Wang*** e no material [eecs.wsu.edu](https://eecs.wsu.edu/~cs460/).
+Project for the course PCS 3732 Microprocessor Laboratory 2022 ([pcs.usp.br/~jkinoshi](https://www2.pcs.usp.br/~jkinoshi/2022/labmicro-22.html)), based on the book ***Embedded and Real Time Systems, K.C Wang***.
 
-A experiência consiste em construir dois projetos a partir de um projeto base. O diretório principal possui o projeto base.
+The experiment consists of building two projects from a base project. The main directory contains the base project.
 
-O primeiro projeto construido na experiência pode ser executado rodando o script **mk.sh** do diretório ***Atividade3***. O segundo projeto construido na experiência pode ser executado rodando o script **mk.sh** do diretório ***Desafio***. Para mais detalhes, por favor consultar a apostila montada para a experiência.
+The first project built in the experiment can be run by running the **mk.sh** script from the Activity3 (***Atividade3**) directory. The second project built in the experiment can be run by running the **mk.sh** script from the Challenge (***Desafio**) directory. For more details, please refer to the workbook put together for the experiment.
 
